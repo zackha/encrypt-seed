@@ -8,7 +8,6 @@
     <button @click="performEncryption">Encrypt</button>
     <button @click="performDecryption">Decrypt</button>
     <button @click="generatePassword">Generate Password</button>
-    <button v-if="result" @click="copyResult">Copy Result</button>
     <p v-if="state.copyPassSuccess">Password copied!</p>
     <p v-if="state.copyResultSuccess">Copied!</p>
     <p>Result: {{ result }}</p>
@@ -35,6 +34,7 @@ const performEncryption = () => {
   const iv = CryptoJS.lib.WordArray.random(128 / 8);
   const encrypted = CryptoJS.AES.encrypt(text.value, key, { iv: iv });
   result.value = CryptoJS.enc.Base64.stringify(salt.concat(iv).concat(encrypted.ciphertext));
+  copyResultToClipboard();
 };
 
 const performDecryption = () => {
@@ -51,13 +51,14 @@ const performDecryption = () => {
 
     const decrypted = CryptoJS.AES.decrypt({ ciphertext: ciphertext }, key, { iv: iv });
     result.value = decrypted.toString(CryptoJS.enc.Utf8);
+    copyResultToClipboard();
   } catch (e) {
     result.value = 'Decryption error!';
   }
 };
 
 const generatePassword = async () => {
-  password.value = CryptoJS.lib.WordArray.random(16).toString(); // 128-bit key
+  password.value = CryptoJS.lib.WordArray.random(16).toString();
   try {
     await navigator.clipboard.writeText(password.value);
     state.copyPassSuccess = true;
@@ -76,7 +77,7 @@ const togglePasswordVisibility = () => {
 const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
 const passwordIcon = computed(() => (isPasswordVisible.value ? 'hide' : 'show'));
 
-const copyResult = async () => {
+const copyResultToClipboard = async () => {
   try {
     await navigator.clipboard.writeText(result.value);
     state.copyResultSuccess = true;
