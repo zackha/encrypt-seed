@@ -4,11 +4,11 @@
     <div>
       <input :type="passwordFieldType" v-model="password" placeholder="Password" />
       <button @click="togglePasswordVisibility">{{ passwordIcon }}</button>
+      <button @click="generatePassword">Generate Password</button>
+      <p v-if="state.copyPassSuccess">Password copied!</p>
     </div>
     <button @click="performEncryption">Encrypt</button>
     <button @click="performDecryption">Decrypt</button>
-    <button @click="generatePassword">Generate Password</button>
-    <p v-if="state.copyPassSuccess">Password copied!</p>
     <p>Result: {{ result }}</p>
     <p v-if="state.copyResultSuccess">Copied!</p>
     <select v-model="colorMode.preference">
