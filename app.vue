@@ -8,7 +8,9 @@
     <button @click="performEncryption">Encrypt</button>
     <button @click="performDecryption">Decrypt</button>
     <button @click="generatePassword">Generate Password</button>
-    <p v-if="state.copySuccess">Password copied!</p>
+    <button v-if="result" @click="copyResult">Copy Result</button>
+    <p v-if="state.copyPassSuccess">Password copied!</p>
+    <p v-if="state.copyResultSuccess">Copied!</p>
     <p>Result: {{ result }}</p>
   </div>
 </template>
@@ -20,7 +22,7 @@ import CryptoJS from 'crypto-js';
 const text = ref('');
 const password = ref('');
 const result = ref('');
-const state = reactive({ copySuccess: false });
+const state = reactive({ copyPassSuccess: false, copyResultSuccess: false });
 const isPasswordVisible = ref(false);
 
 const performEncryption = () => {
@@ -58,9 +60,9 @@ const generatePassword = async () => {
   password.value = CryptoJS.lib.WordArray.random(16).toString(); // 128-bit key
   try {
     await navigator.clipboard.writeText(password.value);
-    state.copySuccess = true;
+    state.copyPassSuccess = true;
     setTimeout(() => {
-      state.copySuccess = false;
+      state.copyPassSuccess = false;
     }, 1900);
   } catch (err) {
     console.error('Failed to copy password', err);
@@ -73,4 +75,16 @@ const togglePasswordVisibility = () => {
 
 const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
 const passwordIcon = computed(() => (isPasswordVisible.value ? 'hide' : 'show'));
+
+const copyResult = async () => {
+  try {
+    await navigator.clipboard.writeText(result.value);
+    state.copyResultSuccess = true;
+    setTimeout(() => {
+      state.copyResultSuccess = false;
+    }, 1900);
+  } catch (err) {
+    console.error('Failed to copy result', err);
+  }
+};
 </script>
