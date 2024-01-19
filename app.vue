@@ -1,10 +1,13 @@
 <template>
   <div>
     <input v-model="text" type="text" placeholder="Text to encrypt or encrypted text" />
-    <input v-model="password" type="password" placeholder="Password" />
+    <div>
+      <input :type="passwordFieldType" v-model="password" placeholder="Password" />
+      <button @click="togglePasswordVisibility">{{ passwordIcon }}</button>
+    </div>
     <button @click="performEncryption">Encrypt</button>
     <button @click="performDecryption">Decrypt</button>
-    <button @click="generatePassword">Generate Random Password</button>
+    <button @click="generatePassword">Generate Password</button>
     <p v-if="state.copySuccess">Password copied!</p>
     <p>Result: {{ result }}</p>
   </div>
@@ -18,6 +21,7 @@ const text = ref('');
 const password = ref('');
 const result = ref('');
 const state = reactive({ copySuccess: false });
+const isPasswordVisible = ref(false);
 
 const performEncryption = () => {
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -62,4 +66,11 @@ const generatePassword = async () => {
     console.error('Failed to copy password', err);
   }
 };
+
+const togglePasswordVisibility = () => {
+  isPasswordVisible.value = !isPasswordVisible.value;
+};
+
+const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
+const passwordIcon = computed(() => (isPasswordVisible.value ? 'hide' : 'show'));
 </script>
