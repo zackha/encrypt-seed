@@ -4,18 +4,20 @@
     <input v-model="password" type="password" placeholder="Password" />
     <button @click="performEncryption">Encrypt</button>
     <button @click="performDecryption">Decrypt</button>
-    <button @click="generateRandomPassword">Generate Random Password</button>
+    <button @click="generatePassword">Generate Random Password</button>
+    <p v-if="state.copySuccess">Password copied!</p>
     <p>Result: {{ result }}</p>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import CryptoJS from 'crypto-js';
 
 const text = ref('');
 const password = ref('');
 const result = ref('');
+const state = reactive({ copySuccess: false });
 
 const performEncryption = () => {
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -48,7 +50,16 @@ const performDecryption = () => {
   }
 };
 
-const generateRandomPassword = () => {
-  password.value = CryptoJS.lib.WordArray.random(16).toString();
+const generatePassword = async () => {
+  password.value = CryptoJS.lib.WordArray.random(16).toString(); // 128-bit key
+  try {
+    await navigator.clipboard.writeText(password.value);
+    state.copySuccess = true;
+    setTimeout(() => {
+      state.copySuccess = false;
+    }, 1900);
+  } catch (err) {
+    console.error('Failed to copy password', err);
+  }
 };
 </script>
