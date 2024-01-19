@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <input v-model="text" type="text" placeholder="Text to encrypt or encrypted text" />
     <div>
       <input :type="passwordFieldType" v-model="password" placeholder="Password" />
@@ -11,6 +11,11 @@
     <p v-if="state.copyPassSuccess">Password copied!</p>
     <p v-if="state.copyResultSuccess">Copied!</p>
     <p>Result: {{ result }}</p>
+    <select v-model="colorMode.preference">
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
   </div>
 </template>
 
@@ -18,6 +23,7 @@
 import { ref, reactive } from 'vue';
 import CryptoJS from 'crypto-js';
 
+const colorMode = useColorMode();
 const text = ref('');
 const password = ref('');
 const result = ref('');
@@ -89,3 +95,14 @@ const copyResultToClipboard = async () => {
   }
 };
 </script>
+
+<style>
+body {
+  background-color: #fff;
+  color: #000;
+}
+.dark-mode body {
+  background-color: #000;
+  color: #fff;
+}
+</style>
