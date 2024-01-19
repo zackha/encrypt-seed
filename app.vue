@@ -9,8 +9,8 @@
     <button @click="performDecryption">Decrypt</button>
     <button @click="generatePassword">Generate Password</button>
     <p v-if="state.copyPassSuccess">Password copied!</p>
-    <p v-if="state.copyResultSuccess">Copied!</p>
     <p>Result: {{ result }}</p>
+    <p v-if="state.copyResultSuccess">Copied!</p>
     <select v-model="colorMode.preference">
       <option value="system">System</option>
       <option value="light">Light</option>
@@ -100,6 +100,7 @@ const copyResultToClipboard = async () => {
 body {
   background-color: #fff;
   color: #000;
+  font-family: monospace;
 }
 .dark-mode body {
   background-color: #000;
