@@ -1,16 +1,34 @@
 <template>
   <div class="body">
-    <input v-model="text" type="text" placeholder="Text to encrypt or encrypted text" />
-    <div>
-      <input :type="passwordFieldType" v-model="password" placeholder="Password" />
-      <button @click="togglePasswordVisibility">{{ passwordIcon }}</button>
-      <button @click="generatePassword">Generate Password</button>
+    <div class="content">
+      <div class="main">
+        <div class="texts">
+          <textarea v-model="text" rows="12" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
+          <div class="password">
+            <input :type="passwordFieldType" v-model="password" placeholder="Password" />
+            <div class="passwordcomp">
+              <span class="comp" @click="generatePassword">
+                <component :is="PixelarticonsReload" />
+              </span>
+              <span class="comp" @click="togglePasswordVisibility">
+                <component :is="passwordIconComponent" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="buttons">
+            <button @click="performEncryption">Encrypt</button>
+            <button @click="performDecryption">Decrypt</button>
+          </div>
+          <div class="result-container">
+            <div>{{ result }}</div>
+          </div>
+        </div>
+      </div>
+      <p v-if="state.copyResultSuccess">Copied!</p>
       <p v-if="state.copyPassSuccess">Password copied!</p>
     </div>
-    <button @click="performEncryption">Encrypt</button>
-    <button @click="performDecryption">Decrypt</button>
-    <p>Result: {{ result }}</p>
-    <p v-if="state.copyResultSuccess">Copied!</p>
     <select v-model="colorMode.preference">
       <option value="system">System</option>
       <option value="light">Light</option>
@@ -20,8 +38,10 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
 import CryptoJS from 'crypto-js';
+import PixelarticonsEye from '@/components/PixelarticonsEye.vue';
+import PixelarticonsEyeClosed from '@/components/PixelarticonsEyeClosed.vue';
+import PixelarticonsReload from '@/components/PixelarticonsReload.vue';
 
 const colorMode = useColorMode();
 const text = ref('');
@@ -29,6 +49,8 @@ const password = ref('');
 const result = ref('');
 const state = reactive({ copyPassSuccess: false, copyResultSuccess: false });
 const isPasswordVisible = ref(false);
+const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
+const passwordIconComponent = computed(() => (isPasswordVisible.value ? PixelarticonsEyeClosed : PixelarticonsEye));
 
 const performEncryption = () => {
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -64,7 +86,7 @@ const performDecryption = () => {
 };
 
 const generatePassword = async () => {
-  password.value = CryptoJS.lib.WordArray.random(16).toString();
+  password.value = CryptoJS.lib.WordArray.random(19).toString();
   try {
     await navigator.clipboard.writeText(password.value);
     state.copyPassSuccess = true;
@@ -79,9 +101,6 @@ const generatePassword = async () => {
 const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
-
-const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
-const passwordIcon = computed(() => (isPasswordVisible.value ? 'hide' : 'show'));
 
 const copyResultToClipboard = async () => {
   try {
@@ -100,10 +119,98 @@ const copyResultToClipboard = async () => {
 body {
   background-color: #fff;
   color: #000;
-  font-family: monospace;
+  font-family: 'VT323', monospace;
+  margin: 0;
+  overflow: hidden;
 }
 .dark-mode body {
   background-color: #000;
   color: #fff;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.main {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 20px;
+  border: 2px solid #2b2b2b;
+  display: grid;
+  justify-content: space-between;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  max-width: 90%;
+  max-height: 90%;
+}
+.texts {
+  gap: 16px;
+  display: grid;
+}
+textarea,
+.result-container {
+  border: 2px solid #2b2b2b;
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  word-wrap: break-word;
+}
+textarea:focus,
+input:focus {
+  outline: none;
+}
+input {
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+  background-color: #000;
+  color: #fff;
+  border: 0px;
+  padding: 12px 10px;
+  width: 100%;
+}
+.password {
+  border: 2px solid #2b2b2b;
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+.comp {
+  display: flex;
+  padding: 12px 10px;
+}
+.comp:active {
+  scale: 0.8;
+  color: #fff;
+}
+.passwordcomp {
+  display: flex;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.buttons {
+  gap: 16px;
+  display: flex;
+}
+button {
+  background-color: black;
+  color: white;
+  border: 2px solid #2b2b2b;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  padding: 18px;
+  width: 100%;
+}
+.result-container {
+  height: 100%;
 }
 </style>
