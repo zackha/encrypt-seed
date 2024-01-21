@@ -1,40 +1,31 @@
 <template>
-  <div class="body">
-    <div class="content">
-      <div class="main">
-        <div class="texts">
-          <textarea v-model="text" rows="12" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
-          <div class="password">
-            <input :type="passwordFieldType" v-model="password" placeholder="Password" />
-            <div class="passwordcomp">
-              <span class="comp" @click="generatePassword">
-                <component :is="PixelarticonsReload" />
-              </span>
-              <span class="comp" @click="togglePasswordVisibility">
-                <component :is="passwordIconComponent" />
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="right">
-          <div class="buttons">
-            <button @click="performEncryption">Encrypt</button>
-            <button @click="performDecryption">Decrypt</button>
-          </div>
-          <div class="result-container">
-            <div>{{ result }}</div>
-          </div>
+  <div class="main">
+    <div class="left">
+      <textarea v-model="text" rows="6" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
+      <div class="password">
+        <input :type="passwordFieldType" v-model="password" placeholder="Password" />
+        <div class="passwordcomp">
+          <span class="comp" @click="generatePassword">
+            <component :is="PixelarticonsReload" />
+          </span>
+          <span class="comp" @click="togglePasswordVisibility">
+            <component :is="passwordIconComponent" />
+          </span>
         </div>
       </div>
-      <p v-if="state.copyResultSuccess">Copied!</p>
-      <p v-if="state.copyPassSuccess">Password copied!</p>
     </div>
-    <select v-model="colorMode.preference">
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
+    <div class="right">
+      <div class="buttons">
+        <button @click="performEncryption">Encrypt</button>
+        <button @click="performDecryption" style="border-left: 1px solid">Decrypt</button>
+      </div>
+      <div class="result-container">
+        {{ result }}
+      </div>
+    </div>
   </div>
+  <p v-if="state.copyResultSuccess">Copied!</p>
+  <p v-if="state.copyPassSuccess">Password copied!</p>
 </template>
 
 <script setup>
@@ -116,48 +107,38 @@ const copyResultToClipboard = async () => {
 </script>
 
 <style>
+* {
+  font-family: 'VT323', monospace;
+  word-break: break-word;
+}
+
 body {
   background-color: #fff;
   color: #000;
-  font-family: 'VT323', monospace;
-  margin: 0;
-  overflow: hidden;
 }
 .dark-mode body {
   background-color: #000;
   color: #fff;
 }
-.content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 .main {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 20px;
-  border: 2px solid #2b2b2b;
-  display: grid;
-  justify-content: space-between;
-  gap: 16px;
-  grid-template-columns: 1fr 1fr;
-  max-width: 90%;
-  max-height: 90%;
+  display: inline-flex;
+  border: 1px solid;
+  height: 200px;
 }
-.texts {
-  gap: 16px;
-  display: grid;
+.left {
+  display: flex;
+  border-right: 1px solid;
+  flex-direction: column;
 }
 textarea,
 .result-container {
-  border: 2px solid #2b2b2b;
   font-size: 18px;
-  font-family: 'VT323', monospace;
   background-color: #000;
   color: #fff;
+  resize: none;
+  border: 0px;
   padding: 10px;
-  word-wrap: break-word;
+  flex: 1;
 }
 textarea:focus,
 input:focus {
@@ -165,25 +146,24 @@ input:focus {
 }
 input {
   font-size: 18px;
-  font-family: 'VT323', monospace;
   background-color: #000;
   color: #fff;
   border: 0px;
-  padding: 12px 10px;
-  width: 100%;
+  padding: 10px;
+  flex: 1;
+  width: 280px;
 }
 .password {
-  border: 2px solid #2b2b2b;
   font-size: 18px;
-  font-family: 'VT323', monospace;
   background-color: #000;
   color: #fff;
   display: flex;
   align-items: center;
+  border-top: 1px solid;
 }
 .comp {
   display: flex;
-  padding: 12px 10px;
+  padding: 10px;
 }
 .comp:active {
   scale: 0.8;
@@ -195,22 +175,31 @@ input {
 .right {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 .buttons {
-  gap: 16px;
   display: flex;
 }
 button {
   background-color: black;
   color: white;
-  border: 2px solid #2b2b2b;
-  font-family: 'VT323', monospace;
   font-size: 18px;
-  padding: 18px;
-  width: 100%;
+  padding: 10px;
+  flex: 1;
+  border: 0px;
 }
 .result-container {
-  height: 100%;
+  border-top: 1px solid;
+  overflow: auto;
+  width: 200px;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  background-color: #fff;
 }
 </style>
