@@ -137,8 +137,10 @@ textarea,
   color: #fff;
   resize: none;
   border: 0px;
-  padding: 10px;
+  margin: 10px 10px 10px 10px;
+  padding: 0px 7px 0px 0px;
   flex: 1;
+  overflow-x: hidden;
 }
 textarea:focus,
 input:focus {
@@ -178,6 +180,7 @@ input {
 }
 .buttons {
   display: flex;
+  border-bottom: 1px solid;
 }
 button {
   background-color: black;
@@ -188,18 +191,13 @@ button {
   border: 0px;
 }
 .result-container {
-  border-top: 1px solid;
   overflow: auto;
   width: 200px;
 }
-
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 2px;
 }
-
 ::-webkit-scrollbar-thumb {
-  border: 1px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
   background-color: #fff;
 }
 </style>
