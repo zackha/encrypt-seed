@@ -1,31 +1,38 @@
 <template>
-  <div class="main">
-    <div class="left">
-      <textarea v-model="text" rows="6" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
-      <div class="password">
-        <input :type="passwordFieldType" v-model="password" placeholder="Password" />
-        <div class="passwordcomp">
-          <span class="comp" @click="generatePassword">
-            <component :is="PixelarticonsReload" />
-          </span>
-          <span class="comp" @click="togglePasswordVisibility">
-            <component :is="passwordIconComponent" />
-          </span>
+  <div class="content">
+    <div class="main">
+      <div>
+        <p v-if="state.copyResultSuccess">Copied!</p>
+        <p v-if="state.copyPassSuccess">Password copied!</p>
+      </div>
+      <div class="program">
+        <div class="left">
+          <textarea v-model="text" rows="6" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
+          <div class="password">
+            <input :type="passwordFieldType" v-model="password" placeholder="Password" />
+            <div class="passwordcomp">
+              <span class="comp" @click="generatePassword">
+                <component :is="PixelarticonsReload" />
+              </span>
+              <span class="comp" @click="togglePasswordVisibility">
+                <component :is="passwordIconComponent" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="buttons">
+            <button @click="performEncryption">Encrypt</button>
+            <button @click="performDecryption" style="border-left: 1px solid">Decrypt</button>
+          </div>
+          <div class="result-container">
+            {{ result }}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="right">
-      <div class="buttons">
-        <button @click="performEncryption">Encrypt</button>
-        <button @click="performDecryption" style="border-left: 1px solid">Decrypt</button>
-      </div>
-      <div class="result-container">
-        {{ result }}
-      </div>
+      <div></div>
     </div>
   </div>
-  <p v-if="state.copyResultSuccess">Copied!</p>
-  <p v-if="state.copyPassSuccess">Password copied!</p>
 </template>
 
 <script setup>
@@ -120,10 +127,20 @@ body {
   background-color: #000;
   color: #fff;
 }
+.content {
+  display: flex;
+  justify-content: center;
+}
 .main {
-  display: inline-flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.program {
   border: 1px solid;
   height: 200px;
+  display: flex;
+  justify-content: center;
 }
 .left {
   display: flex;
