@@ -1,10 +1,6 @@
 <template>
   <div class="content">
     <div class="main">
-      <div>
-        <p v-if="state.copyResultSuccess">Copied!</p>
-        <p v-if="state.copyPassSuccess">Password copied!</p>
-      </div>
       <div class="program">
         <div class="left">
           <textarea v-model="text" rows="6" type="text" placeholder="Text to encrypt or encrypted text"></textarea>
@@ -30,7 +26,19 @@
           </div>
         </div>
       </div>
-      <div></div>
+      <div class="footer">
+        <div>
+          <div v-if="state.copyResultSuccess">Copied!</div>
+          <div v-if="state.copyPassSuccess">Password copied!</div>
+        </div>
+        <div class="footer-right">
+          <span @click="isDark = !isDark" style="display: flex">
+            <PixelarticonsMoon v-if="isDark" />
+            <PixelarticonsSunAlt v-else />
+          </span>
+          <a class="link" href="https://github.com/zackha/encrypt-seed" target="_blank" rel="noopener noreferrer"> github </a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,15 +48,26 @@ import CryptoJS from 'crypto-js';
 import PixelarticonsEye from '@/components/PixelarticonsEye.vue';
 import PixelarticonsEyeClosed from '@/components/PixelarticonsEyeClosed.vue';
 import PixelarticonsReload from '@/components/PixelarticonsReload.vue';
+import PixelarticonsMoon from './components/PixelarticonsMoon.vue';
+import PixelarticonsSunAlt from './components/PixelarticonsSunAlt.vue';
 
 const colorMode = useColorMode();
 const text = ref('');
 const password = ref('');
 const result = ref('');
 const state = reactive({ copyPassSuccess: false, copyResultSuccess: false });
-const isPasswordVisible = ref(false);
+const isPasswordVisible = ref(true);
 const passwordFieldType = computed(() => (isPasswordVisible.value ? 'text' : 'password'));
 const passwordIconComponent = computed(() => (isPasswordVisible.value ? PixelarticonsEyeClosed : PixelarticonsEye));
+
+const isDark = computed({
+  get() {
+    return colorMode.value === 'dark';
+  },
+  set() {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
+  },
+});
 
 const performEncryption = () => {
   const salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -118,7 +137,6 @@ const copyResultToClipboard = async () => {
   font-family: 'VT323', monospace;
   word-break: break-word;
 }
-
 body {
   background-color: #fff;
   color: #000;
@@ -135,6 +153,14 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .program {
   border: 1px solid;
@@ -150,8 +176,6 @@ body {
 textarea,
 .result-container {
   font-size: 18px;
-  background-color: #000;
-  color: #fff;
   resize: none;
   border: 0px;
   margin: 10px 10px 10px 10px;
@@ -159,14 +183,21 @@ textarea,
   flex: 1;
   overflow-x: hidden;
 }
+.dark-mode textarea,
+.dark-mode .result-container,
+.dark-mode input,
+.dark-mode .password,
+.dark-mode button,
+.dark-mode .link {
+  background-color: #000;
+  color: #fff;
+}
 textarea:focus,
 input:focus {
   outline: none;
 }
 input {
   font-size: 18px;
-  background-color: #000;
-  color: #fff;
   border: 0px;
   padding: 10px;
   flex: 1;
@@ -174,8 +205,6 @@ input {
 }
 .password {
   font-size: 18px;
-  background-color: #000;
-  color: #fff;
   display: flex;
   align-items: center;
   border-top: 1px solid;
@@ -186,7 +215,7 @@ input {
 }
 .comp:active {
   scale: 0.8;
-  color: #fff;
+  color: grey;
 }
 .passwordcomp {
   display: flex;
@@ -200,8 +229,6 @@ input {
   border-bottom: 1px solid;
 }
 button {
-  background-color: black;
-  color: white;
   font-size: 18px;
   padding: 10px;
   flex: 1;
@@ -210,6 +237,16 @@ button {
 .result-container {
   overflow: auto;
   width: 200px;
+}
+.link {
+  padding-bottom: 2px;
+  text-decoration-line: none;
+  color: #000;
+}
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 ::-webkit-scrollbar {
   width: 2px;
