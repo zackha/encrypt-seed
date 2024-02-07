@@ -1,75 +1,28 @@
-# Nuxt 3 Minimal Starter
+**Bitcoin Recovery Seed Encryptor** 
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+**Description:**
 
-## Setup
+Bitcoin Recovery Seed Encryptor is an open-source project that enables Bitcoin users to securely encrypt their recovery phrases. This project utilizes the CryptoJS.AES encryption method to safeguard recovery phrases.
 
-Make sure to install the dependencies:
+**Key Features:**
 
-```bash
-# npm
-npm install
+- Robust encryption of recovery phrases
+- Open source with publicly accessible source code for review
+- User-friendly interface
+- Designed to enhance the security of Bitcoin assets
 
-# pnpm
-pnpm install
+**Usage Guide:**
 
-# yarn
-yarn install
+1. Clone the project repository from [GitHub](https://github.com/zackha/encrypt-seed).
+2. Install the necessary dependencies and run the project.
+3. Encrypt your recovery phrases and store them securely.
 
-# bun
-bun install
-```
+By using this project, you can store your Bitcoin recovery phrases more securely and enhance the security of your Bitcoin assets.
 
-## Development Server
+**Support and Contributions:**
 
-Start the development server on `http://localhost:3000`:
+If you wish to contribute to this project or report issues, please feel free to reach out via the GitHub repository. Contributions to the project are always welcome.
 
-```bash
-# npm
-npm run dev
+**License:**
 
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is licensed under the [MIT License](LICENSE).
