@@ -1,28 +1,30 @@
-**Bitcoin Recovery Seed Encryptor** 
+**Secure Bitcoin Recovery Phrase Encryption** 
+
+**Project Website:** [encrypt-seed.netlify.app](https://encrypt-seed.netlify.app/)
 
 **Description:**
 
-Bitcoin Recovery Seed Encryptor is an open-source project that enables Bitcoin users to securely encrypt their recovery phrases. This project utilizes the CryptoJS.AES encryption method to safeguard recovery phrases.
+The Secure Bitcoin Recovery Phrase Encryption project represents a robust and open-source solution aimed at bolstering the security of Bitcoin wallet recovery phrases. Leveraging the cryptographic strength of the CryptoJS.AES library, this project empowers users to encrypt their recovery phrases with confidence.
 
 **Key Features:**
 
-- Robust encryption of recovery phrases
-- Open source with publicly accessible source code for review
-- User-friendly interface
-- Designed to enhance the security of Bitcoin assets
+- Robust encryption algorithm to protect recovery phrases
+- Fully open-source, with transparent source code available for public scrutiny
+- Intuitive and user-friendly interface for ease of use
+- Purpose-built to fortify the security of Bitcoin assets
 
-**Usage Guide:**
+**Getting Started:**
 
-1. Clone the project repository from [GitHub](https://github.com/zackha/encrypt-seed).
+1. Clone the project repository from [GitHub](https://github.com/yourrepositoryname).
 2. Install the necessary dependencies and run the project.
-3. Encrypt your recovery phrases and store them securely.
+3. Encrypt your recovery phrases securely, offering added protection to your Bitcoin assets.
 
-By using this project, you can store your Bitcoin recovery phrases more securely and enhance the security of your Bitcoin assets.
+By embracing this project, users can elevate the security of their Bitcoin recovery phrases, ultimately enhancing the safeguarding of their valuable cryptocurrency assets.
 
 **Support and Contributions:**
 
-If you wish to contribute to this project or report issues, please feel free to reach out via the GitHub repository. Contributions to the project are always welcome.
+We welcome contributions and issue reporting from the community. Please don't hesitate to engage with us on the GitHub repository.
 
 **License:**
 
-This project is licensed under the [MIT License](LICENSE).
+This project operates under the permissive [MIT License](LICENSE), allowing for flexibility in usage and modification.
