@@ -2,6 +2,8 @@
 
 **Project Website:** [encrypt-seed.netlify.app](https://encrypt-seed.netlify.app/)
 
+**Bitcointalk.org Topic:** [Introducing a New Cryptographic Solution for Bitcoin Recovery Seed Security](https://bitcointalk.org/index.php?topic=5484357.0)
+
 **Description:**
 
 The Secure Bitcoin Recovery Phrase Encryption project represents a robust and open-source solution aimed at bolstering the security of Bitcoin wallet recovery phrases. Leveraging the cryptographic strength of the CryptoJS.AES library, this project empowers users to encrypt their recovery phrases with confidence.
