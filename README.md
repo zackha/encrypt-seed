@@ -15,7 +15,7 @@ The Secure Bitcoin Recovery Phrase Encryption project represents a robust and op
 
 **Getting Started:**
 
-1. Clone the project repository from [GitHub](https://github.com/zackha/encrypt-seed).
+1. Clone the project repository from [GitHub](https://github.com/zackha/encrypt-seed/fork).
 2. Install the necessary dependencies and run the project.
 3. Encrypt your recovery phrases securely, offering added protection to your Bitcoin assets.
 
